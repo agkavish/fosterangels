@@ -1,0 +1,23 @@
+<!-- Indices written at Sun, 11 Jan 2015 12:12:30 CST -->
+
+<datastore-indexes>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Profile" ancestor="false" source="auto">
+        <property name="email" direction="asc"/>
+        <property name="date" direction="desc"/>
+    </datastore-index>
+
+    <!-- Used 3 times in query history -->
+    <datastore-index kind="CWRequest" ancestor="false" source="auto">
+        <property name="status" direction="asc"/>
+        <property name="date" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Profile" ancestor="false" source="auto">
+        <property name="profileStatus" direction="asc"/>
+        <property name="date" direction="desc"/>
+    </datastore-index>
+
+</datastore-indexes>

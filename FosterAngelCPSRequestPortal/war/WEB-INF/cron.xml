@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/cron/changeStatus</url>
+    <description>Update Status of approved requests</description>
+    <schedule>every  day 00:00</schedule>
+  </cron>
+  <cron>
+    <url>/cron/checkUserStatus</url>
+    <description>Deactivate inactive users</description>
+    <schedule>every 2160 hours</schedule>
+  </cron>
+ </cronentries>
