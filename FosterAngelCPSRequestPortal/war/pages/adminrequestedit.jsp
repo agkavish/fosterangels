@@ -197,7 +197,7 @@
   
 	<div class="form-group">
     <label for="supervisor">Date Needed (mm/dd/yyyy)</label>
-    <input type="date" class="form-control" name="requestDate" id="requestDate" placeholder="mm/dd/yyyy" onblur ="return ValidateRequestedDate(this);" value="<%=cwRequest.getRequestedDateString() %>"><%=cwRequest.getRequestedDateString() %>
+    <input type="date" class="form-control" name="requestDate" id="requestDate" placeholder="mm/dd/yyyy" onblur ="return ValidateRequestedDate(this);" value="<%=cwRequest.getRequestedDateString() %>">
   </div>
   
     <div class="form-group">
@@ -283,7 +283,7 @@
   
   <div class="form-group">
     <label for="supervisor">Date Delivered (mm/dd/yyyy)</label>
-    <input type="date" class="form-control" name="deliveredDate" id="deliveredDate" placeholder="mm/dd/yyyy" onblur ="return ValidateDeliveredDate(this);" value="<%=cwRequest.getDeliveredDateString() %>"><%=cwRequest.getDeliveredDateString() %>
+    <input type="date" class="form-control" name="deliveredDate" id="deliveredDate" placeholder="mm/dd/yyyy" onblur ="return ValidateDeliveredDate(this);" value="<%=cwRequest.getDeliveredDateString() %>">
   </div>
     
 </div>

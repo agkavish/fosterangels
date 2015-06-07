@@ -56,7 +56,7 @@
 			fosterAngelsApproval = "Complete";
 			delivered = "Complete";
 			attachReceipts = "Pending";
-			closeOut = "Complete";
+			closeOut = "Pending";
 			break;	
 		case CLOSED:
 			supervisorApproval = "Complete";

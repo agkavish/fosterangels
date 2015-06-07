@@ -272,6 +272,8 @@ public class CWRequestController {
 				viewPage = "cpspendingrequestsdetail";
 			}  else if (cwRequest.getStatus().equalsIgnoreCase(RequestStatusTypes.RECEIPTAVAILABLE.getLabel())){
 				viewPage = "cpsrequestswithreceiptsdetail";
+			}  else if (cwRequest.getStatus().equalsIgnoreCase(RequestStatusTypes.DELIVERED.getLabel())){
+				viewPage = "cpsdeliveredrequestsdetail";
 			}  
 			else {
 				viewPage = "cpspendingrequestsdetail";
@@ -577,6 +579,8 @@ public class CWRequestController {
 			viewpage = "cpsrequestspending" ;
 		} else if(status.equals("approved")){
 			viewpage = "cpsrequestsapproved" ;
+		} else if(status.equals("delivered")){
+			viewpage = "cpsrequestsdelivered" ;
 		} else if(status.equals("closed")){
 			viewpage = "cpsrequestsclosed" ;
 		} else if(status.equals("overdue")){

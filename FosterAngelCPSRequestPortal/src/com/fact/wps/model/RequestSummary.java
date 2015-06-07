@@ -14,6 +14,7 @@ public class RequestSummary {
 	private int closedRequest;
 	private int requestInError;
 	private int overdueRequest;
+	private int deliveredRequest;
 	private int receiptAvailableRequest;
 	/**
 	 * @return the receiptAvailableRequest
@@ -34,7 +35,8 @@ public class RequestSummary {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("RequestSummary [approvedRequest=")
-				.append(approvedRequest).append(", pendingRequest=")
+				.append(approvedRequest).append(", Delivered=")
+				.append(deliveredRequest).append(", pendingRequest=")
 				.append(pendingRequest).append(", closedRequest=")
 				.append(closedRequest).append(", requestInError=")
 				.append(requestInError).append(", overdueRequest=")
@@ -101,6 +103,12 @@ public class RequestSummary {
 	 */
 	public void setOverdueRequest(int overdueRequest) {
 		this.overdueRequest = overdueRequest;
+	}
+	public int getDeliveredRequest() {
+		return deliveredRequest;
+	}
+	public void setDeliveredRequest(int delivered) {
+		this.deliveredRequest = delivered;
 	}
 
 }

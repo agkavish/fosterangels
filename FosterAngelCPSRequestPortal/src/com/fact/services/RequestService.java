@@ -220,6 +220,8 @@ public class RequestService {
 			sts = new String [] {RequestStatusTypes.PENDINGFACTAPPROVAL.getLabel(), RequestStatusTypes.PENDINGSUPERVISORAPPROVAL.getLabel()};
 		} else if (status.equals("approved")){
 			sts = new String []{RequestStatusTypes.APPROVED.getLabel()};
+		} else if (status.equals("delivered")){
+			sts = new String []{RequestStatusTypes.DELIVERED.getLabel()};
 		} else if (status.equals("denied")){
 			sts = new String []{RequestStatusTypes.DENIED.getLabel(), RequestStatusTypes.SUPERVISORDENIED.getLabel()};
 		} else if (status.equals("overdue")){
@@ -316,6 +318,7 @@ public class RequestService {
 		int errorReqCount = 0;		
 		int deniedReqCount = 0;
 		int reqWithReceipts = 0;
+		int deliveredReqCount = 0;
 		
 		
 		for (CWRequest req : results){
@@ -338,6 +341,8 @@ public class RequestService {
 				pendingReqCount += 1;
 			} else if(req.getStatus().equalsIgnoreCase(RequestStatusTypes.DENIED.getLabel()) || req.getStatus().equalsIgnoreCase(RequestStatusTypes.SUPERVISORDENIED.getLabel()) ) {
 				deniedReqCount  += 1;
+			} else if(req.getStatus().equalsIgnoreCase(RequestStatusTypes.DELIVERED.getLabel()) || req.getStatus().equalsIgnoreCase(RequestStatusTypes.SUPERVISORDENIED.getLabel()) ) {
+				deliveredReqCount  += 1;
 			}
 			}
 		}
@@ -349,7 +354,7 @@ public class RequestService {
 		reqSummary.setRequestInError(errorReqCount);		
 		reqSummary.setRequestInError(deniedReqCount);
 		reqSummary.setReceiptAvailableRequest(reqWithReceipts);
-		
+		reqSummary.setDeliveredRequest(deliveredReqCount);
 		return reqSummary;
 		
 	}

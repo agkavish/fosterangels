@@ -82,6 +82,10 @@
     <span class="badge approved"><%= reqSummary.getApprovedRequest() %></span>
     <a href="/cwrequest/list/approved">Approved</a>
   </li>
+     <li class="list-group-item">
+    <span class="badge approved"><%= reqSummary.getDeliveredRequest() %></span>
+    <a href="/cwrequest/list/delivered">Delivered</a>
+  </li>
   <li class="list-group-item">
     <span class="badge approved"><%= reqSummary.getReceiptAvailableRequest() %></span>
     <a href="/cwrequest/list/receipts">Receipt Attached</a>
