@@ -223,6 +223,21 @@
 
   </div>
   
+  <div class="form-group">
+    <label for="supervisor">Category</label>
+     <select class="form-control" name="category" id="category" >
+		<option value = "Adoption Assistance">Adoption Assistance</option>
+		<option value="Clothing/Personal Care">Clothing/Personal Care</option>
+		<option value="Education">Education</option>
+		<option value="Food">Food</option>
+		<option value = "Housing/Shelter">Housing/Shelter</option>
+		<option value = "Medical">Medical</option>
+		<option value = "Miscellaneous">Miscellaneous</option>
+		<option value = "Recreation">Recreation</option>
+		<option value = "Transportation">Transportation</option>
+  </select>
+  </div>
+  
 </div>
 
   

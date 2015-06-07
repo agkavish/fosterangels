@@ -113,8 +113,26 @@ public class CWRequest implements Serializable {
 	@Persistent
 	private double purchasedAmount ;
 	
+	@Persistent
+	private Date deliveredDate ;
 
 	
+
+	public Date getDeliveredDate() {
+		return deliveredDate;
+	}
+
+	public void setDeliveredDate(Date deliveredDate) {
+		this.deliveredDate = deliveredDate;
+	}
+	
+	public String getDeliveredDateString() {
+		String dateStr = "";
+		if(this.deliveredDate != null){
+			dateStr = new SimpleDateFormat(DateUtil.DATE_FORMAT).format(this.deliveredDate); 
+		}
+		return dateStr;
+	}
 
 	/**
 	 * @return the purchasedAmount
@@ -372,7 +390,7 @@ public class CWRequest implements Serializable {
 	public String getRequestedDateString() {
 		String dateStr = "";
 		if(requestedDate != null){
-			dateStr = new SimpleDateFormat(DateUtil.DATE_FORMAT_US).format(requestedDate); 
+			dateStr = new SimpleDateFormat(DateUtil.DATE_FORMAT).format(requestedDate); 
 		}
 		return dateStr;
 	}

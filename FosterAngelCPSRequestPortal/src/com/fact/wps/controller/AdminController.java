@@ -86,9 +86,10 @@ public class AdminController {
 		statusTypes.add("overdue");
 		statusTypes.add("closed");
 		statusTypes.add("denied");
+		statusTypes.add("delivered");
 		reqSummaryMap = this.reqService.getRequestsByStatusTypes(statusTypes, null, null);	
 		model.addAttribute("requests", reqSummaryMap);
-		model.addAttribute("filter" , "paodc");
+		model.addAttribute("filter" , "paodce"); // e for Delivered/Executed
 		model.addAttribute("searchField" , "");
 		model.addAttribute("searchValue" , "");
 			
@@ -127,6 +128,11 @@ public class AdminController {
 		if(filter.contains("d")){
 			statusTypes.add("denied");
 		}
+		
+		if(filter.contains("e")){
+			statusTypes.add("delivered");
+		}
+		
 		reqSummaryMap = this.reqService.getRequestsByStatusTypes(statusTypes, searchField, searchValue);	
 		model.addAttribute("requests", reqSummaryMap);
 		model.addAttribute("filter" , filter);
@@ -309,6 +315,8 @@ public class AdminController {
 			viewpage = "adminequestsoverdue" ;
 		} else if(status.equals("denied")){
 			viewpage = "adminrequestsdenied" ;
+		} else if(status.equals("delivered")){
+			viewpage = "adminrequestsdelivered" ;
 		}
 		//<TODO> Add more
 		

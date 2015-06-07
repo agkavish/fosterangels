@@ -95,6 +95,7 @@ public class RequestService {
 				}
 				cwr.setLastUpdatedDate(cwReq.getLastUpdatedDate());
 				cwr.setLastUpdatedUser(cwReq.getLastUpdatedUser());
+				cwr.setDeliveredDate(cwReq.getDeliveredDate());
 				cwr.setNumOfChildernSupported(cwReq.getNumOfChildernSupported());
 				cwr.setRequestType(cwReq.getRequestType());
 				cwr.setAdminEmailNotes(cwReq.getAdminEmailNotes());
@@ -587,6 +588,10 @@ public class RequestService {
 			reqSummaryMap.put("adminpending", this.findRequestsByStatusAndTimePeriod("adminpending",0, true , searchField, searchValue));
 		}
 		
+		if (statusTypes.contains("delivered")){
+			reqSummaryMap.put("delivered", this.findRequestsByStatusAndTimePeriod("delivered", 0, true , searchField, searchValue));
+		}
+		
 		return reqSummaryMap; 
 	}
 	
@@ -637,6 +642,8 @@ public List<CWRequest> findRequestsByStatusAndTimePeriod(String status, int peri
 		sts = new String []{RequestStatusTypes.CLOSED.getLabel()};	
 	} else if (status.equals("adminpending")){
 		sts = new String []{RequestStatusTypes.PENDINGFACTAPPROVAL.getLabel()};	
+	} else if (status.equals("delivered")){
+		sts = new String []{RequestStatusTypes.DELIVERED.getLabel()};	
 	} 
 	//<TODO> add period conditions			
 	StringBuffer qStr = new StringBuffer("SELECT from com.fact.wps.model.CWRequest where :r1.contains(status) ");

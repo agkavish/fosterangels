@@ -34,6 +34,7 @@
        	String fosterAngelsApproval="";
        	String attachReceipts="";
        	String closeOut = "";
+       	String delivered = "";
 	
 		if(request.getSession().getAttribute("signinuser")!=null){
 		
@@ -49,58 +50,6 @@
 		} 	else {
 			cwRequest = new CWRequest();
 		}
-		switch(RequestStatusTypes.valueOf(cwRequest.getStatus().toUpperCase()))
-		{
-		case NEW: case PENDINGSUPERVISORAPPROVAL:
-			supervisorApproval = "Pending";
-			fosterAngelsApproval = "Pending";
-			attachReceipts = "Pending";
-			closeOut = "Pending";
-			break;
-		case PENDINGFACTAPPROVAL:
-			supervisorApproval = "Complete";
-			fosterAngelsApproval = "Pending";
-			attachReceipts = "Pending";
-			closeOut = "Pending";
-			break;
-		case APPROVED: case PENDINGRECEIPTS:
-			supervisorApproval = "Complete";
-			fosterAngelsApproval = "Complete";
-			attachReceipts = "Pending";
-			closeOut = "Pending";
-			break;			
-		case DELIVERED: case CLOSED:
-			supervisorApproval = "Complete";
-			fosterAngelsApproval = "Complete";
-			attachReceipts = "Complete";
-			closeOut = "Complete";
-			break;	
-		case RECEIPTAVAILABLE:
-			supervisorApproval = "Complete";
-			fosterAngelsApproval = "Complete";
-			attachReceipts = "Complete";
-			closeOut = "Pending";
-			break;	
-		case DENIED:
-			supervisorApproval = "Complete";
-			fosterAngelsApproval = "Denied";
-			attachReceipts = "Pending";
-			closeOut = "Pending";
-			break;	
-		case SUPERVISORDENIED:
-			supervisorApproval = "Denied";
-			fosterAngelsApproval = "Pending";
-			attachReceipts = "Pending";
-			closeOut = "Pending";
-			break;	
-		default:
-			supervisorApproval = "Pending";
-			fosterAngelsApproval = "Pending";
-			attachReceipts = "Pending";
-			closeOut = "Pending";
-			break;
-		}
-		
 	%>
   <body>
   
@@ -161,42 +110,18 @@
           <li class="list-group-item"><a class="text-center" href="mailto:<%= cwRequest.getRequestorID() %>">Requestor : <%= cwRequest.getRequestorID() %></a></li>
           <li class="list-group-item">Category: <%= cwRequest.getCategory() %></li>
           <li class="list-group-item">Is Sample Request: <%= cwRequest.isSampleReqFlag() %></li>
-   </ul>         
-<label for="cpsworkerstable">Steps:</label>
-<table class=" table table-condensed  table table-striped table table-hover" id="cpsworkerstable">
-
-<thead>
-<tr>
-<th>Step</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Supervisor approval</td>
-<td><%= supervisorApproval %></td>
-</tr>
-<tr>
-<td>Foster Angels Approval</td>
-<td><%= fosterAngelsApproval %></td>
-</tr>
-<tr>
-<td>Attach Receipt(s)</td>
-<td><%= attachReceipts %></td>
-</tr>
-<tr>
-<td>Closeout</td>
-<td><%= closeOut %></td>
-</tr>
-</tbody>
-</table>
+   </ul>        
+    
+<%@include file="requeststatusstepspage.jsp" %>
 
 
 
 
 </div>
-
-
+<div class="container pagination-centered">
+  <button class="btn btn-lg btn-primary btn-block " type="button" onclick="location.href='/cwrequest/edit'">Edit Request</button>
+  </div>
+  <br />  
   <div class="container pagination-centered">
   <button class="btn btn-lg btn-defult btn-block " type="button" onclick="location.href='/admin/reqsummary'">Back</button>
   </div>

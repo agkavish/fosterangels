@@ -28,6 +28,8 @@ function formValidation() {
 function adminFormValidation(){
 	var status = document.cpsrequest.status.value;
 	var emailContent = document.cpsrequest.adminemailnotes;
+	var deliveredDate = document.cpsrequest.deliveredDate;
+
 	if (formValidation()) {
 		if(status == "Approved"){
 			if(emailContent.value == null || emailContent.value == '') {
@@ -38,6 +40,9 @@ function adminFormValidation(){
 			} else {
 				emailContent.style.borderColor ='';
 			}
+		} else if (status == "Delivered") {
+			
+			return ValidateDeliveredDate(deliveredDate);
 		}
 		
 	} else {
@@ -126,6 +131,33 @@ function ValidateRequestedDate(reqDate) {
 			return false
 		}		
 		reqDate.style.borderColor ='';
+		return true;			
+	}
+	
+}
+
+
+function ValidateDeliveredDate(aDate) {	
+    var date_regex_us = /^\d{2}\/\d{2}\/\d{4}$/ ;
+    var date_regex = /^[0-9]{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/ ;
+
+
+	var rDate = aDate.value;
+	if (rDate == '' ) {
+		alert("Please provide delivered date in mm/dd/yyyy format!");
+		aDate.style.borderColor ='red';
+		//reqDate.focus();
+		return false;
+		
+	} else {
+		if (!(date_regex_us.test(rDate) || date_regex.test(rDate)))
+		{
+		  
+			alert("Delivered date format is wrong. Please provide date in mm/dd/yyyy format.")
+			aDate.style.borderColor ='red';
+			return false
+		}		
+		aDate.style.borderColor ='';
 		return true;			
 	}
 	

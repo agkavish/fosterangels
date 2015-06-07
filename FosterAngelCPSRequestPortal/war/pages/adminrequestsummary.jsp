@@ -38,6 +38,7 @@
   		var overdue = '';
   		var denied = '';
   		var closed = '';
+  		var deliverd = '';
   	
   		if(document.reqfilter.pending.checked) {
   			pending = document.reqfilter.pending.value;	
@@ -59,7 +60,11 @@
 	   		closed = document.reqfilter.closed.value;
  		}
 	   
-	   var filtercriteria = pending + approved + overdue + denied + closed;
+	   if(document.reqfilter.delivered.checked){
+	   		delivered = document.reqfilter.delivered.value;
+		}
+	   
+	   var filtercriteria = pending + approved + overdue + denied + closed + delivered;
 	   
 	   var searchFieldName = document.reqfilter.fieldselect.value;
 	   var searchValue = document.reqfilter.searchentry.value;
@@ -113,6 +118,7 @@
 	    Boolean checkOverdue = true;
 	    Boolean checkClosed = true;
 	    Boolean checkDenied = true;
+	    Boolean checkDelivered = true;
 
 	    if (filter != null) {
 	    	checkPending = filter.contains("p");
@@ -120,6 +126,8 @@
 	    	checkOverdue = filter.contains("o");
 	    	checkClosed = filter.contains("c");
 	    	checkDenied = filter.contains("d");
+	    	checkDelivered = filter.contains("e");
+
      }
 		
 	%>
@@ -170,7 +178,7 @@
   <input type="checkbox" id="approved" value="a" <% if (checkApproved){ %> checked="checked" <% } %>> Approved
 </label>
 <label class="checkbox-inline">
-  <input type="checkbox" id="overdue" value="o" <% if (checkOverdue){ %> checked="checked" <% } %>> Delivered
+  <input type="checkbox" id="overdue" value="o" <% if (checkOverdue){ %> checked="checked" <% } %>> Overdue
 </label>
 <label class="checkbox-inline">
   <input type="checkbox" id="denied" value="d" <% if (checkDenied){ %> checked="checked" <% } %>> Denied
@@ -178,6 +186,10 @@
 <label class="checkbox-inline">
   <input type="checkbox" id="closed" value="c" <% if (checkClosed){ %> checked="checked" <% } %>> Closed
 </label>
+<label class="checkbox-inline">
+  <input type="checkbox" id="delivered" value="e" <% if (checkDelivered){ %> checked="checked" <% } %>> Delivered
+</label>
+
 </div>
 
  <br></br>
@@ -308,7 +320,7 @@ List <CWRequest> overdueReq = reqSummaryMap.get("overdue");
 if(overdueReq != null && overdueReq.size() > 0){
 	
 	%> 
-<label for="overduetable">Delivered Requests:</label>
+<label for="overduetable">Overdue Requests:</label>
 <table class="table table-condensed table table-hover" id="overduetable">
 <thead>
 <tr>
@@ -320,6 +332,7 @@ if(overdueReq != null && overdueReq.size() > 0){
 <th>Receipt</th>
 <th>Amount</th>
 <th>Vendor</th>
+<th>Delivered Date</th>
 </tr>
 </thead>
 <tbody>	
@@ -341,6 +354,57 @@ if(overdueReq != null && overdueReq.size() > 0){
 <td><%= receiptYN %></td>
 <td><%= req.getPurchasedAmount() %></td>
 <td><%= req.getRequestedVendor() %></td>
+<td><%= req.getDeliveredDateString() %></td>
+</tr>
+<%
+	} %>
+</tbody>
+</table>
+	
+	<%
+	}
+%>
+<%
+List <CWRequest> deliveredReq = reqSummaryMap.get("delivered");
+if(deliveredReq != null && deliveredReq.size() > 0){
+	
+	%> 
+<label for="deliveredtable">Delivered Requests:</label>
+<table class="table table-condensed table table-hover" id="deliveredtable">
+<thead>
+<tr>
+<th>Request Number </th>
+<th>Child's Name</th>
+<th>Request Date</th>
+<th>Requested By</th>
+<th>Request Type</th>
+<th>Receipt</th>
+<th>Amount</th>
+<th>Vendor</th>
+<th>Delivered Date</th>
+</tr>
+</thead>
+<tbody>	
+	<%
+
+	for (CWRequest req : deliveredReq) {
+		String receiptYN = "NO";
+		if(req.getStatus().equalsIgnoreCase(RequestStatusTypes.RECEIPTAVAILABLE.getLabel())){
+			receiptYN = "Yes";
+		}
+%>
+
+<tr class="warning">
+<td><a href="/cwrequest/details/<%=KeyFactory.keyToString(req.getKey())%>">#<%= req.getRequestNumber() %></a></td>
+<td><%= req.getChildName() %></td>
+<td><%= req.getRequestedDateString() %></td>
+<td><%= req.getRequestorName() %></td>
+<td><%= req.getRequestType() %></td>
+<td><%= receiptYN %></td>
+<td><%= req.getPurchasedAmount() %></td>
+<td><%= req.getRequestedVendor() %></td>
+<td><%= req.getDeliveredDateString() %></td>
+
 </tr>
 <%
 	} %>

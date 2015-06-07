@@ -1,8 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page import="com.fact.wps.model.Profile" %>
 <%@ page import="com.fact.wps.model.CWRequest" %>
-<%@page import = "com.fact.common.RequestStatusTypes" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <html lang="en">
   <head>
@@ -27,15 +29,10 @@
     <![endif]-->
   
   </head>
-
- <%
+  
+     <%
 		Profile uProfile= null;
-       	String supervisorApproval="";
-       	String fosterAngelsApproval="";
-       	String attachReceipts="";
-       	String closeOut = "";
-       	String delivered = "";
-           	
+	
 		if(request.getSession().getAttribute("signinuser")!=null){
 		
 			uProfile = (Profile) request.getSession().getAttribute("signinuser");			
@@ -43,15 +40,15 @@
 			uProfile = new Profile();
 		}
 		
-		CWRequest cwRequest = null;
-		if(request.getSession().getAttribute("cwrequestinuse")!=null){
-			
-			cwRequest = (CWRequest) request.getSession().getAttribute("cwrequestinuse");			
-		} 	else {
-			cwRequest = new CWRequest();
+		List<CWRequest> results = null;
+		if (request.getAttribute("requestList") != null){
+			results = (List<CWRequest>) request.getAttribute("requestList");
+		} else {
+			results = new ArrayList<CWRequest>();
 		}
-		
 	%>
+
+
   <body>
   
 <div class="container col-lg-10 col-md-12 col-sm-12 col-xs-12">
@@ -83,45 +80,24 @@
    <div id="wrap">
 
  
-<label class="Alerts" for="AlertSection"><a href="/admin/reqsummary" class="alert-link">Requests</a> / Pending / Request # <%= cwRequest.getRequestNumber() %> / <%= cwRequest.getRequestType() %></label>
+<label class="Alerts" for="AlertSection"><a href="#" class="alert-link">Requests</a> / Delivered</label>
 
 <div class="AlertSection">
 
+<%
+for (CWRequest req:results) {
 
-<label class="Alerts" for="AlertSection">Child's Information</label>
-<ul class="list-group">
-  <li class="list-group-item">First Name: <%= cwRequest.getChildName() %></li>
-  <li class="list-group-item">Age: <%= cwRequest.getAge() %></li>
-  <li class="list-group-item">PID: <%= cwRequest.getPid() %></li>
-  <li class="list-group-item">Gender: <%= cwRequest.getGender() %></li>
-  <li class="list-group-item"># Child in request: <%= cwRequest.getNumOfChildernSupported() %></li>
-  <li class="list-group-item"># Times family has used: <%= cwRequest.getNumberOfTimesUsedFact() %></li>
-    <li class="list-group-item">County: <%= cwRequest.getCountyInRegion7() %></li>
- </ul>  
- 
- <label class="Alerts" for="AlertSection">Request Information</label>   
-      <ul class="list-group">
-        <li class="list-group-item">Date Needed: <%= cwRequest.getRequestedDateString() %></li>
-          <li class="list-group-item">Amount: $<%= cwRequest.getReqestedAmount() %></li>
-          <li class="list-group-item">Vendor: <%= cwRequest.getRequestedVendor() %></li>
-          <li class="list-group-item">Description: <%= cwRequest.getRequestDescription() %></li>
-          <li class="list-group-item"><a class="text-center" href="mailto:<%= cwRequest.getRequestorID() %>">Requestor : <%= cwRequest.getRequestorID() %></a></li>
-
-      </ul>
-          
-<%@include file="requeststatusstepspage.jsp" %>
-
-
+%>
+<div class="alert alert-info"> <a href="/cwrequest/details/<%=KeyFactory.keyToString(req.getKey())%>" class="alert-link">Request *<%=req.getChildName() %>* (*<%=req.getRequestNumber() %>*) *<%=req.getRequestedDateString()%>*</a> </div>
+<%
+}
+%>
 
 
 </div>
 
 <div class="container pagination-centered">
-  <button class="btn btn-lg btn-primary btn-block " type="button" onclick="location.href='/cwrequest/edit'">Edit Request</button>
-  </div>
-  <br />  
-  <div class="container pagination-centered">
-  <button class="btn btn-lg btn-defult btn-block " type="button" onclick="location.href='/admin/reqsummary'">Back</button>
+  <button class="btn btn-lg btn-primary btn-block " type="button" onclick="location.href='/admin/reqsummary'" >Back</button>
   </div>
    	 
 

@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page import="com.fact.wps.model.CPSRequestAttachment"%>
 <%@page import="java.util.List"%>
-<%@page import = "com.fact.common.RequestStatusTypes" %>
 <%@ page import="com.fact.wps.model.Profile" %>
+<%@page import = "com.fact.common.RequestStatusTypes" %>
 <%@ page import="com.fact.wps.model.CWRequest" %>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,7 +36,7 @@
        	String fosterAngelsApproval="";
        	String attachReceipts="";
        	String closeOut = "";
-       	String delivered = "";
+       	String delivered = ""; 
            	
 		if(request.getSession().getAttribute("signinuser")!=null){
 		
@@ -52,8 +52,6 @@
 		} 	else {
 			cwRequest = new CWRequest();
 		}
-		
-		
 		List<CPSRequestAttachment>  attachments = null;
 		if(request.getSession().getAttribute("cwrequestinuse_attachments")!=null){
 			
@@ -72,7 +70,7 @@
 
 <div class="container">
 <ul class="nav nav-pills">
- <li><a href="/cpshome"><img class="" src="/../img/Home.png" alt="" height="20" width="20"></a></li>
+<li><a href="/cpshome"><img class="" src="/../img/Home.png" alt="" height="20" width="20"></a></li>
   <li><a href="/admin/reqsummary">Requests</a></li>
   <li><a href="/admin/usersummary">Users</a></li>
   <li><a href="/admin/reports">Reports</a></li>
@@ -91,18 +89,25 @@
    <div id="wrap">
 
  
-<label class="Alerts" for="AlertSection"><a href="/admin/reqsummary" class="alert-link">Requests</a> / Closed / Request # <%= cwRequest.getRequestNumber() %> / <%= cwRequest.getRequestType() %></label>
+<label class="Alerts" for="AlertSection"><a href="/admin/reqsummary" class="alert-link">Requests</a> / Delivered / Request # <%= cwRequest.getRequestNumber() %> / <%= cwRequest.getRequestType() %></label>
 
 <div class="AlertSection">
 
-  <label class="Alerts" for="AlertSection">Receipts</label>
+  <button class="btn btn-lg btn-primary btn-block " type="button" onclick="location.href='/cwrequest/attach/<%=KeyFactory.keyToString(cwRequest.getKey())%>'">Attach Receipt</button>
+
+ <label class="Alerts" for="AlertSection">Receipts</label>
 <ul class="list-group">
 <% if(attachments != null && attachments.size() > 0){
 	for (CPSRequestAttachment attachment: attachments){
+		if(attachments.size() > 1) {
  %>
-  <li class="list-group-item"><%= attachment.getName() %>&nbsp;&nbsp;<a href="/cwrequest/filedl/<%=attachment.getFileKey() %>" class="alert-link" target="_blank">Download</a></li>
+  <li class="list-group-item"><%= attachment.getName() %>&nbsp;&nbsp;<a href="/cwrequest/filedl/<%=attachment.getFileKey() %>" class="alert-link" target="_blank">Download</a>&nbsp;&nbsp;<a href="/cwrequest/filedel/<%=attachment.getFileKey() %>/<%=KeyFactory.keyToString(cwRequest.getKey()) %>" class="alert-link">Delete</a> </li>
   <%
- 
+  } else { 
+    
+  %>
+   <li class="list-group-item"><%= attachment.getName() %>&nbsp;&nbsp;<a href="/cwrequest/filedl/<%=attachment.getFileKey() %>" class="alert-link" target="_blank">Download</a></li>
+  <% }
   }
   	} else {
    %>
@@ -111,8 +116,7 @@
   	}
    %>
 
- </ul>  
-
+ </ul>
 <label class="Alerts" for="AlertSection">Child's Information</label>
 <ul class="list-group">
   <li class="list-group-item">First Name: <%= cwRequest.getChildName() %></li>
@@ -131,23 +135,27 @@
           <li class="list-group-item">Purchased Amount: $<%= cwRequest.getPurchasedAmount() %></li>
           <li class="list-group-item">Vendor: <%= cwRequest.getRequestedVendor() %></li>
           <li class="list-group-item">Description: <%= cwRequest.getRequestDescription() %></li>
-          <li class="list-group-item"><a class="text-center" href="mailto:<%= cwRequest.getRequestorID() %>">Requestor : <%= cwRequest.getRequestorID() %></a></li>
+          <li class="list-group-item"><a class="text-center" href="mailto:<%= cwRequest.getRequestorID() %>">Requested By : <%= cwRequest.getRequestorID() %></a></li>
           <li class="list-group-item">Category: <%= cwRequest.getCategory() %></li>
           <li class="list-group-item">Is Sample Request: <%= cwRequest.isSampleReqFlag() %></li>
           <li class="list-group-item">Delivered Date: <%= cwRequest.getDeliveredDateString() %></li>
-       </ul>   
+          
+
+</ul>
+
+
+
 <%@include file="requeststatusstepspage.jsp" %>
 
-
-
-
 </div>
-
-
+<div class="container pagination-centered">
+  <button class="btn btn-lg btn-primary btn-block " type="button" onclick="location.href='/cwrequest/edit'">Edit Request</button>
+  </div>
+  <br /> 
   <div class="container pagination-centered">
   <button class="btn btn-lg btn-defult btn-block " type="button" onclick="location.href='/admin/reqsummary'">Back</button>
   </div>
-    	 
+     	 
 
  <div class="container">   
      <div id="footer">

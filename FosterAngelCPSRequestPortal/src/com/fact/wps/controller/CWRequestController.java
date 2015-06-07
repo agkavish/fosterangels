@@ -152,6 +152,11 @@ public class CWRequestController {
 			numChildSupported =  Integer.parseInt(request.getParameter("numChildSupported"));
 		}
 		
+		String category = null;
+		if(request.getParameter("category") != null) {
+			 category = request.getParameter("category");
+
+		}
 
 		CWRequest r = new CWRequest();
 		r.setAge(age);
@@ -179,6 +184,7 @@ public class CWRequestController {
 		}
 		r.setRequestDescription(requestDescription);
 		r.setRequestedVendor(requestVendor);
+		r.setCategory(category);
 		r.setDate(new Date());
 		r.setSampleReqFlag(false);
 		if(numChildSupported > 0){
@@ -276,11 +282,14 @@ public class CWRequestController {
 			} else if (cwRequest.getStatus().equalsIgnoreCase(RequestStatusTypes.CLOSED.getLabel())){
 				viewPage = "adminclosedrequestsdetail";
 			} else if (cwRequest.getStatus().equalsIgnoreCase(RequestStatusTypes.PENDINGRECEIPTS.getLabel()) ||
-					cwRequest.getStatus().equalsIgnoreCase(RequestStatusTypes.RECEIPTAVAILABLE.getLabel())){
+					cwRequest.getStatus().equalsIgnoreCase(RequestStatusTypes.RECEIPTAVAILABLE.getLabel()) ){
 				viewPage = "adminoverduerequestsdetail";
 			} else if (cwRequest.getStatus().equalsIgnoreCase(RequestStatusTypes.DENIED.getLabel())){
 				viewPage = "adminpendingrequestsdetail";
-			} else {
+			} else if (cwRequest.getStatus().equalsIgnoreCase(RequestStatusTypes.DELIVERED.getLabel())){
+				viewPage = "admindeliveredrequestsdetail";
+			}  
+			else {
 				viewPage = "adminpendingrequestsdetail";
 			}
 		} 
@@ -425,8 +434,10 @@ public class CWRequestController {
 			profile = (Profile) request.getSession().getAttribute("signinuser");
 			uid = profile.getEmail();
 		}
+		
+		String deliveredDate = (String) request.getParameter("deliveredDate");
 
-
+		
 			CWRequest r =  new CWRequest();
 
 			
@@ -452,7 +463,25 @@ public class CWRequestController {
 					}
 				}
 				r.setRequestedDate(tempDate);
-			}			r.setRequestDescription(requestDescription);
+			}		
+			
+			if(deliveredDate != null && !deliveredDate.isEmpty()) {
+				Date tempDate = null;
+				try {
+					tempDate = new SimpleDateFormat(DateUtil.DATE_FORMAT).parse(deliveredDate);
+				} catch (ParseException e) {
+					// This may be due to date in mm/dd/yyyy format
+					try {
+						tempDate = new SimpleDateFormat(DateUtil.DATE_FORMAT_US).parse(deliveredDate);
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				r.setDeliveredDate(tempDate);
+			}		
+			
+			r.setRequestDescription(requestDescription);
 			r.setRequestedVendor(requestVendor);
 			r.setLastUpdatedDate(new Date());
 			

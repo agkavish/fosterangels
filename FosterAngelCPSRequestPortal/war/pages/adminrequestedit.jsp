@@ -197,7 +197,7 @@
   
 	<div class="form-group">
     <label for="supervisor">Date Needed (mm/dd/yyyy)</label>
-    <input type="date" class="form-control" name="requestDate" id="requestDate" placeholder="mm/dd/yyyy" onblur ="return ValidateRequestedDate(this);" value="<%=cwRequest.getRequestedDateString() %>">
+    <input type="date" class="form-control" name="requestDate" id="requestDate" placeholder="mm/dd/yyyy" onblur ="return ValidateRequestedDate(this);" value="<%=cwRequest.getRequestedDateString() %>"><%=cwRequest.getRequestedDateString() %>
   </div>
   
     <div class="form-group">
@@ -245,7 +245,7 @@
     <div class="checkbox">
     <label for="checkbox">
     <input type="checkbox" name="isSampleReq" id="isSampleReq" value="true"/>
-    <strong> Flag as Sample Request </strong>
+    <strong>Flag as Sample Request </strong>
     </label>
     </br> </br>
   </div>
@@ -270,7 +270,20 @@
 		<option value = "<%=RequestStatusTypes.APPROVED.getLabel() %>">Approved</option>
 		<option value = "<%=RequestStatusTypes.DENIED.getLabel() %>">Denied</option>		
 		<option value = "<%=RequestStatusTypes.CLOSED.getLabel() %>">Closed</option>
+		<% 
+			if (!cwRequest.getStatus().equals(RequestStatusTypes.DENIED.getLabel())){
+		%>
+		<option value = "<%=RequestStatusTypes.DELIVERED.getLabel() %>">Delivered</option>
+		<%
+			}
+		%>
+		
   </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="supervisor">Date Delivered (mm/dd/yyyy)</label>
+    <input type="date" class="form-control" name="deliveredDate" id="deliveredDate" placeholder="mm/dd/yyyy" onblur ="return ValidateDeliveredDate(this);" value="<%=cwRequest.getDeliveredDateString() %>"><%=cwRequest.getDeliveredDateString() %>
   </div>
     
 </div>
