@@ -34,12 +34,7 @@
 
  <%
 		Profile uProfile= null;
-    	String supervisorApproval="";
-    	String fosterAngelsApproval="";
-    	String attachReceipts="";
-    	String closeOut = "";
-    	String delivered = "";
-	
+ 	
 		if(request.getSession().getAttribute("signinuser")!=null){
 		
 			uProfile = (Profile) request.getSession().getAttribute("signinuser");			

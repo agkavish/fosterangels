@@ -5,7 +5,7 @@
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <html lang="en">
-  <head>
+  <head>"war/pages/adminpendingrequestsdetail.jsp"
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -30,11 +30,6 @@
 
  <%
 		Profile uProfile= null;
-       	String supervisorApproval="";
-       	String fosterAngelsApproval="";
-       	String attachReceipts="";
-       	String closeOut = "";
-       	String delivered = "";
            	
 		if(request.getSession().getAttribute("signinuser")!=null){
 		

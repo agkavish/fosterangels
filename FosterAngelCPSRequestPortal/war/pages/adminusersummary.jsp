@@ -124,7 +124,7 @@ function generateFormAction() {
 <label class="Alerts" for="AlertSection"> Users</label>
 <div class="AlertSection">
 
-<form name="adminuserfilter" class="form-inline" role="form" action="/admin/usersummary" method="GET" onsubmit="return generateFormAction();" >
+<form name="adminuserfilter" class="form-inline" role="form" action="/admin/usersummary" method="get" onsubmit="return generateFormAction();" >
 
 <div class="form-group">
 <label for="checkboxes">Filter by:</label>

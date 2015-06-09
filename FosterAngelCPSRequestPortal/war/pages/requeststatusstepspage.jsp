@@ -1,27 +1,23 @@
+<%@page import = "com.fact.common.RequestStatusTypes" %>
+<%@ page import="com.fact.wps.model.CWRequest" %>
 <%
-		//Profile uProfile= null;
-    	/*String supervisorApproval="";
-    	String fosterAngelsApproval="";
-    	String attachReceipts="";
+    	String supervisorApproval ="";
+    	String fosterAngelsApproval ="";
+    	String attachReceipts ="";
     	String closeOut = "";
     	String delivered = "";
-	*/
-	/*	if(request.getSession().getAttribute("signinuser")!=null){
+	
 		
-			uProfile = (Profile) request.getSession().getAttribute("signinuser");			
-		} 	else {
-			uProfile = new Profile();
-		}
 		
-		CWRequest cwRequest = null;
+		CWRequest cwRequest1 = null;
 		if(request.getSession().getAttribute("cwrequestinuse")!=null){
 			
-			cwRequest = (CWRequest) request.getSession().getAttribute("cwrequestinuse");			
+			cwRequest1 = (CWRequest) request.getSession().getAttribute("cwrequestinuse");			
 		} 	else {
-			cwRequest = new CWRequest();
+			cwRequest1 = new CWRequest();
 		}
-*/		
-		switch(RequestStatusTypes.valueOf(cwRequest.getStatus().toUpperCase()))
+		
+		switch(RequestStatusTypes.valueOf(cwRequest1.getStatus().toUpperCase()))
 		{
 		case NEW: case PENDINGSUPERVISORAPPROVAL:
 			supervisorApproval = "Pending";
@@ -93,7 +89,7 @@
 			attachReceipts = "Pending";
 			closeOut = "Pending";
 			break;
-		}
+		} 
 %>
 
 

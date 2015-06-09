@@ -3,3 +3,5 @@ FosterAngelCPSRequestPortal/war/WEB-INF/appengine-generated/datastore-indexes-au
 *.bin
 FosterAngelCPSRequestPortal/war/WEB-INF/lib/appengine-api-1.0-sdk-1.9.20.jar
 *.jar
+FosterAngelCPSRequestPortal/.settings/com.google.appengine.eclipse.core.prefs
+*.jar
