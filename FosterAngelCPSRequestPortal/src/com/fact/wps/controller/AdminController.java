@@ -92,6 +92,12 @@ public class AdminController {
 		model.addAttribute("filter" , "paodce"); // e for Delivered/Executed
 		model.addAttribute("searchField" , "");
 		model.addAttribute("searchValue" , "");
+		String exportToExcel = request.getParameter("exportToExcel");
+		if (exportToExcel != null
+	                && exportToExcel.toString().equalsIgnoreCase("YES")) {
+		 
+			return new ModelAndView("adminrequestsummaryexport");
+		}
 			
 		return new ModelAndView("adminrequestsummary");
 
@@ -137,7 +143,14 @@ public class AdminController {
 		model.addAttribute("requests", reqSummaryMap);
 		model.addAttribute("filter" , filter);
 		model.addAttribute("searchField" , searchField);
-		model.addAttribute("searchValue" , searchValue);	
+		model.addAttribute("searchValue" , searchValue);
+		
+		String exportToExcel = request.getParameter("exportToExcel");
+		if (exportToExcel != null
+	                && exportToExcel.toString().equalsIgnoreCase("YES")) {
+		 
+			return new ModelAndView("adminrequestsummaryexport");
+		}
 	
 		return new ModelAndView("adminrequestsummary");
 
@@ -198,6 +211,13 @@ public class AdminController {
 		model.addAttribute("filter" , filter);
 		model.addAttribute("searchField" , "");
 		model.addAttribute("searchValue" , "*");	
+		
+		String exportToExcel = request.getParameter("exportToExcel");
+		if (exportToExcel != null
+	                && exportToExcel.toString().equalsIgnoreCase("YES")) {
+		 
+			return new ModelAndView("adminrequestsummaryexport");
+		}
 	
 		return new ModelAndView("adminrequestsummary");
 

@@ -17,18 +17,8 @@
 
     <title>Foster Angels' Request Site</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/../dist/css/bootstrap.css" rel="stylesheet">
+   
 
-    <!-- Custom styles for this template -->
-    <link href="/../css/signup.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="/../assets/js/html5shiv.js"></script>
-      <script src="/../assets/js/respond.min.js"></script>
-    <![endif]-->
-  
  
   
   <script>
@@ -135,28 +125,21 @@
 
   <body>
   
-   
+   <%
+        String exportToExcel = request.getParameter("exportToExcel");
+        if (exportToExcel != null
+                && exportToExcel.toString().equalsIgnoreCase("YES")) {
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setHeader("Content-Disposition", "inline; filename="
+                    + "requests.xls");
+ 
+        }
+    %>
   
 <div class="container col-lg-10 col-md-12 col-sm-12 col-xs-12">
 
-<div class="container"> 
-
-    <img class="img-left" src="/../img/FA.png" alt="Foster Angles logo" height="30" width="30"><h4 class="headertext"> Foster Angels</h4>
-
-</div>
 
 <div class="container">
-<ul class="nav nav-pills">
- <li><a href="/cpshome"><img class="" src="/../img/Home.png" alt="" height="20" width="20"></a></li>
-  <li><a href="/admin/reqsummary">Requests</a></li>
-  <li><a href="/admin/usersummary">Users</a></li>
-  <li><a href="/admin/reports">Reports</a></li>
-  <li><a href="/cwrequest/add">Create Request</a></li>
-  <li><a href="/profile/view/<%=KeyFactory.keyToString(uProfile.getKey())%>">Profile</a></li>
-  <ul class="nav navbar-right">
-      <li><a href="/signout">Sign Out</a></li>
-      </ul>
-</ul>
 
 
 
@@ -165,61 +148,6 @@
    <div id="wrap">
 
  
-<label class="Alerts" for="AlertSection"> Requests</label>
-<div class="AlertSection">
-
-<form class="form-inline" role="form" name="reqfilter" method="get" action="#" onsubmit="return generateFormAction();">
-
-<div class="form-group">
-<label for="checkboxes">Filter by:</label>
-
-<label class="checkbox-inline" id="filerby">
-  <input type="checkbox" id="pending" value="p" <% if (checkPending){ %> checked="checked" <% } %>> Pending
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="approved" value="a" <% if (checkApproved){ %> checked="checked" <% } %>> Approved
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="overdue" value="o" <% if (checkOverdue){ %> checked="checked" <% } %>> Overdue
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="denied" value="d" <% if (checkDenied){ %> checked="checked" <% } %>> Denied
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="closed" value="c" <% if (checkClosed){ %> checked="checked" <% } %>> Closed
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="delivered" value="e" <% if (checkDelivered){ %> checked="checked" <% } %>> Delivered
-</label>
-
-</div>
-
- <br></br>
-
-<div class="form-group" >
-<label for="fieldselect">Search Field:</label>
-<select class="form-control small" id="fieldselect">
-  <option value="childName">Child's First Name</option>
-  <option value ="requestorFirstName">Case Worker</option>
-  <option value ="pid">Identification Number</option>
-  <option value ="requestedVendor">Vendor</option>
-<!-- <option value ="supervisor">Supervisor</option>  -->  
-</select>
-
-
-<label for="searchentry">By:</label>
-    <input type="text" class="form-control small" id="searchentry" placeholder="a name" value = "<%= searchValue %>">
-
-</div>
-
-<button type="submit" class="btn btn-primary">Filter + Search</button>
-
-</form>
-
-<br></br>
-
-<div>
-
 
 <%
 List <CWRequest> pendingReq = reqSummaryMap.get("adminpending");
@@ -248,7 +176,7 @@ if(pendingReq != null && pendingReq.size() > 0){
 		}
 %>
 <tr class="pending">
-<td><a href="/cwrequest/details/<%=KeyFactory.keyToString(req.getKey())%>">#<%= req.getRequestNumber() %></a></td>
+<td><%= req.getRequestNumber() %></td>
 <td><%= req.getChildName() %></td>
 <td><%= req.getRequestedDateString() %></td>
 <td><%= req.getRequestorName() %></td>
@@ -296,7 +224,7 @@ if(approvedReq != null && approvedReq.size() > 0){
 %>
 
 <tr class="success">
-<td><a href="/cwrequest/details/<%=KeyFactory.keyToString(req.getKey())%>">#<%= req.getRequestNumber() %></a></td>
+<td><%= req.getRequestNumber() %></td>
 <td><%= req.getChildName() %></td>
 <td><%= req.getRequestedDateString() %></td>
 <td><%= req.getRequestorName() %></td>
@@ -348,7 +276,7 @@ if(overdueReq != null && overdueReq.size() > 0){
 %>
 
 <tr class="warning">
-<td><a href="/cwrequest/details/<%=KeyFactory.keyToString(req.getKey())%>">#<%= req.getRequestNumber() %></a></td>
+<td><%= req.getRequestNumber() %></td>
 <td><%= req.getChildName() %></td>
 <td><%= req.getRequestedDateString() %></td>
 <td><%= req.getRequestorName() %></td>
@@ -397,7 +325,7 @@ if(deliveredReq != null && deliveredReq.size() > 0){
 %>
 
 <tr class="warning">
-<td><a href="/cwrequest/details/<%=KeyFactory.keyToString(req.getKey())%>">#<%= req.getRequestNumber() %></a></td>
+<td><%= req.getRequestNumber() %></td>
 <td><%= req.getChildName() %></td>
 <td><%= req.getRequestedDateString() %></td>
 <td><%= req.getRequestorName() %></td>
@@ -447,7 +375,7 @@ if(deniedReq != null && deniedReq.size() > 0){
 %>
 
 <tr class="danger">
-<td><a href="/cwrequest/details/<%=KeyFactory.keyToString(req.getKey())%>">#<%= req.getRequestNumber() %></a></td>
+<td><%= req.getRequestNumber() %></td>
 <td><%= req.getChildName() %></td>
 <td><%= req.getRequestedDateString() %></td>
 <td><%= req.getRequestorName() %></td>
@@ -459,9 +387,6 @@ if(deniedReq != null && deniedReq.size() > 0){
 
 <%
 	} %>
-<tr>
-<td> <a href="/admin/list/denied/0">Show All</a></td>
-</tr>
 
 </tbody>
 </table>	
@@ -502,7 +427,7 @@ if(closedReq != null && closedReq.size() > 0){
 %>
 
 <tr class="closed">
-<td><a href="/cwrequest/details/<%=KeyFactory.keyToString(req.getKey())%>">#<%= req.getRequestNumber() %></a></td>
+<td><%= req.getRequestNumber() %></td>
 <td><%= req.getChildName() %></td>
 <td><%= req.getRequestedDateString() %></td>
 <td><%= req.getRequestorName() %></td>
@@ -516,38 +441,15 @@ if(closedReq != null && closedReq.size() > 0){
 <%
 	} %>
 	
-<tr>
-<td> <a href="/admin/list/closed/-90">Show Last 90 days</a></td>
-<td> <a href="/admin/list/closed/-180">Show Last 180 days</a></td>
-<td> <a href="/admin/list/closed/0">Show All</a></td>
-</tr>
 </tbody>
 </table>	
 	<%
 	}
 %>
 </div>
-
-<div>
- <a href="?exportToExcel=YES">Export to Excel</a>
-
+ 
 </div>
  
-   
-    
-
-</div>
-
-
-
-    	 
-
- <div class="navbar navbar-fixed-bottom">   
-     <div id="footer">
-       <h6 class="text-center"> For questions or problems please contact Foster Angels at</h6>
-         <h6 class="text-center"> <a class="text-center" href="mailto:info@fosterangelsctx.org">info@fosterangelsctx.org</a> </h6>
-      </div> 
-    </div>
 </div>
   </div>
      </div>
